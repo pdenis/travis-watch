@@ -1,4 +1,3 @@
-
 if (Meteor.isServer) {
     Meteor.methods({
         fetchFromService: function(owner) {
@@ -6,9 +5,23 @@ if (Meteor.isServer) {
             //synchronous GET
             var result = Meteor.http.get(url, {timeout:30000});
             if(result.statusCode==200) {
-                var respJson = JSON.parse(result.content);
                 console.log("response received.");
-                return respJson;
+                JSON.parse(result.content).forEach(function(repo){
+                    repo = {
+                        slug: repo.slug,
+                        build_status: repo.last_build_status,
+                        build_date: repo.last_build_finished_at
+                    };
+
+
+                    doc = Repos.findOne({slug: repo.slug});
+                    if (doc) {
+                        console.log(repo);
+                        Repos.update(doc._id, {$set: repo});
+                    } else {
+                        Repos.insert(repo);
+                    }
+                });
             } else {
                 console.log("Response issue: ", result.statusCode);
                 var errorJson = JSON.parse(result.content);
@@ -18,20 +31,15 @@ if (Meteor.isServer) {
     });
 }
 
-
 if (Meteor.isClient) {
 
     // This code only runs on the client
     Template.body.helpers({
-        statuses: {
-            0: 'success',
-            1: 'error'
+        repos: function() {
+            return Repos.find();
         }
     });
 
-    Handlebars.registerHelper('repos',function(input){
-      return Session.get("repos");
-    });
     Template.body.events({
         "click #submit": function () {
             var owner = $("#owner").val();
@@ -40,19 +48,19 @@ if (Meteor.isClient) {
                     window.alert("Error: " + err.reason);
                     console.log("error occured on receiving data on server. ", err );
                 } else {
-                    console.log("respJson: ", respJson);
-                    Session.set('repos', respJson);
-                    Session.set('owner', owner);
+
 
                 }
             });
         }
     });
-
-    Meteor.setInterval(function() {
-        if (Session.get('owner') != '') {
-            Meteor.call("fetchFromService", Session.get('owner'));
-        }
-    }, 5000);
 }
 
+
+// models
+
+Repos = new Meteor.Collection('repos');
+
+Meteor.methods(function(){
+
+});

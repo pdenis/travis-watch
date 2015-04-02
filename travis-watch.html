@@ -15,14 +15,14 @@
 
         <ul>
             {{#each repos}}
-            {{> build}}
+            {{> repo}}
             {{/each}}
         </ul>
     </div>
 </body>
 
-<template name="build">
-    <li class="status{{last_build_status}}">
+<template name="repo">
+    <li class="status{{build_status}}">
         <a target="_blank" href="http://travis-ci.org/{{slug}}">{{slug}} : {{description}}</a>
     </li>
 </template>
