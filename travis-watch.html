@@ -1,0 +1,28 @@
+<head>
+    <title>Builds</title>
+</head>
+
+<body>
+<div class="header">
+        Your login : <input type="text" name="owner" id="owner" /><br />
+        <button id="submit">OK</button>
+
+</div>
+    <div class="container">
+        <header>
+            <h1>Builds</h1>
+        </header>
+
+        <ul>
+            {{#each repos}}
+            {{> build}}
+            {{/each}}
+        </ul>
+    </div>
+</body>
+
+<template name="build">
+    <li class="status{{last_build_status}}">
+        <a target="_blank" href="http://travis-ci.org/{{slug}}">{{slug}} : {{description}}</a>
+    </li>
+</template>
