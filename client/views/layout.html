@@ -1,0 +1,22 @@
+<head>
+    <title>Builds</title>
+</head>
+
+<body>
+<div class="header">
+    Your login : <input type="text" name="owner" id="owner" /><br />
+    <button id="submit">OK</button>
+
+</div>
+<div class="container">
+    <header>
+        <h1>Repositories</h1>
+    </header>
+
+    <div class="row">
+        {{#each repos}}
+        {{> repo}}
+        {{/each}}
+    </div>
+</div>
+</body>
