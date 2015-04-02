@@ -1,0 +1,30 @@
+a {
+    text-decoration:none;
+    color:black;
+    font-size:14px;
+}
+
+a:hover {
+    color:black;
+}
+.status {
+    background-color:silver;
+}
+
+.status0 {
+    background-color:lightgreen;
+}
+
+.status1 {
+    background-color: red;
+}
+
+.repo {
+    padding:10px 10px;
+    margin:5px;
+    min-height:50px;
+}
+
+.github-logo {
+    height:30px;
+}
