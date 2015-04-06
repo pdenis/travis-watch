@@ -22,9 +22,34 @@ a:hover {
 .repo {
     padding:10px 10px;
     margin:5px;
-    min-height:50px;
+    height:300px;
+}
+
+.travis-logo, .scrutinizer-logo {
+    height:30px;
+    margin:5px;
 }
 
 .github-logo {
-    height:30px;
+    height:37px;
+    padding-top:5px;
+}
+h2 {
+    font-size: 15px;
+}
+
+.links {
+    display:block;
+    margin:auto;
+    padding:auto;
+    text-align:center;
+    width:auto;
+}
+
+.chart {
+    clear:both;
+    margin:5px;
+    padding:10px;
+    text-align:center;
+    width:auto;
 }

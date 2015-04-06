@@ -11,13 +11,23 @@ if (Meteor.isServer) {
                 JSON.parse(result.content).forEach(function(repo){
                     if (repo.last_build_status != null) {
                         try {
-                            scrutinizerRepo = Meteor.http.get(scrutinizer_url + repo.slug, {timeout:30000}).content;
+                            scrutinizerRepo = JSON.parse(Meteor.http.get(scrutinizer_url + repo.slug, {timeout:30000}).content);
+                            metrics = scrutinizerRepo.applications.master.index._embedded.project.metric_values;
 
-                            console.log(scrutinizerRepo);
                             repo = {
                                 slug: repo.slug,
                                 build_status: repo.last_build_status,
-                                build_date: repo.last_build_finished_at
+                                build_date: repo.last_build_finished_at,
+                                description: repo.description,
+                                quality_note: metrics['scrutinizer.quality'],
+                                classes_count: {
+                                    total: metrics['scrutinizer.nb_classes'],
+                                    good: metrics['scrutinizer.nb_classes.good'],
+                                    very_good: metrics['scrutinizer.nb_classes.very_good'],
+                                    pass: metrics['scrutinizer.nb_classes.pass'],
+                                    critical: metrics['scrutinizer.nb_classes.critical'],
+                                    satisfactory: metrics['scrutinizer.nb_classes.satisfactory']
+                                }
                             };
 
                             doc = Repos.findOne({slug: repo.slug});
@@ -27,7 +37,9 @@ if (Meteor.isServer) {
                             } else {
                                 Repos.insert(repo);
                             }
-                        } catch(err) {}
+                        } catch(err) {
+                            console.log(err);
+                        }
                     }
                 });
             } else {
