@@ -6,32 +6,32 @@ if (Meteor.isClient) {
         var data = [
             {
                 value: repo.classes_count.critical,
-                color:"green",
-                highlight: "#FF5A5E",
+                color:"#D90019",
+                highlight: "#D90019",
                 label: "Critical"
             },
             {
                 value: repo.classes_count.very_good,
-                color: "#46BFBD",
-                highlight: "#5AD3D1",
-                label: "Véry Good"
+                color: "#00B84F",
+                highlight: "#00B84F",
+                label: "Very Good"
             },
             {
                 value: repo.classes_count.satisfactory,
-                color: "#FDB45C",
-                highlight: "#FFC870",
+                color: "#D9D21F",
+                highlight: "#D9D21F",
                 label: "Satisfactory"
             },
             {
                 value: repo.classes_count.pass,
-                color: "#949FB1",
-                highlight: "#A8B3C5",
+                color: "#D992A8",
+                highlight: "#D992A8",
                 label: "Pass"
             },
             {
                 value: repo.classes_count.good,
-                color: "#4D5360",
-                highlight: "#616774",
+                color: "#7AB85A",
+                highlight: "#7AB85A",
                 label: "Good"
             }
         ];
@@ -46,16 +46,16 @@ if (Meteor.isClient) {
     // This code only runs on the client
     Template.body.helpers({
         repos: function() {
-            return Repos.find();
+            return Repos.find({owner: Session.get('owner')});
         }
     });
 
     Template.body.events({
         "click #submit": function () {
             var owner = $("#owner").val();
+            Session.set('owner', owner);
             Meteor.call("fetchFromService", owner, function(err, respJson) {
                 if(err) {
-                    window.alert("Error: " + err.reason);
                     console.log("error occured on receiving data on server. ", err );
                 } else {
 
