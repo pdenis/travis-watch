@@ -6,7 +6,6 @@ if (Meteor.isServer) {
             //synchronous GET
             var result = Meteor.http.get(travis_url, {timeout:30000});
             if(result.statusCode==200) {
-                console.log("response received.");
 
                 JSON.parse(result.content).forEach(function(repo){
                     if (repo.last_build_status != null) {
@@ -33,7 +32,6 @@ if (Meteor.isServer) {
 
                             doc = Repos.findOne({slug: repo.slug});
                             if (doc) {
-                                console.log(repo);
                                 Repos.update(doc._id, {$set: repo});
                             } else {
                                 Repos.insert(repo);
