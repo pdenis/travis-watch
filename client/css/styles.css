@@ -12,17 +12,26 @@ a:hover {
 }
 
 .status0 {
-    background-color:lightgreen;
+    background-color:#5cb85c;
 }
 
 .status1 {
-    background-color: red;
+    background-color: #d9534f;
 }
 
 .repo {
     padding:10px 10px;
-    margin:5px;
-    height:300px;
+    border-radius: 10px;
+    margin:20px;
+    height:200px;
+}
+
+.note {
+    left: 0px;
+    position: relative;
+    top: 87px;
+    font-weight: bold;
+    font-size:18px;
 }
 
 .travis-logo, .scrutinizer-logo {
@@ -30,12 +39,21 @@ a:hover {
     margin:5px;
 }
 
+.vertical-center {
+    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+    min-height: 100vh; /* These two lines are counted as one :-)       */
+
+    display: flex;
+    align-items: center;
+}
+
 .github-logo {
     height:37px;
     padding-top:5px;
 }
 h2 {
-    font-size: 15px;
+    font-size: 18px;
+    margin-top:70px;
 }
 
 .links {
@@ -48,8 +66,8 @@ h2 {
 
 .chart {
     clear:both;
-    margin:5px;
-    padding:10px;
+    margin: 0px 15px 10px 15px;
     text-align:center;
     width:auto;
+    float:left;
 }
